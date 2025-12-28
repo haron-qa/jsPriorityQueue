@@ -1,0 +1,23 @@
+{
+  "name": "js-priority-queue-implementation",
+  "version": "1.0.0",
+  "description": "A performant generic Priority Queue implementation using Binary Heap",
+  "main": "src/PriorityQueue.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "bench": "node benchmarks/perf.js"
+  },
+  "keywords": [
+    "priority-queue",
+    "heap",
+    "binary-heap",
+    "data-structure",
+    "algorithm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^1.0.0"
+  }
+}
