@@ -63,71 +63,70 @@ export default class PriorityQueue {
   pop() {
     const size = this.size();
     if (size === 0) return undefined;
-    
+
     // Swap root with last element
     const root = this._heap[0];
     const tail = this._heap.pop();
-    
+
     if (this.size() > 0) {
       this._heap[0] = tail;
       this._siftDown();
     }
-    
+
     return root;
   }
 
   _siftUp() {
     let nodeIdx = this.size() - 1;
+    const node = this._heap[nodeIdx];
+
     while (nodeIdx > 0) {
       const parentIdx = (nodeIdx - 1) >>> 1;
       const parent = this._heap[parentIdx];
-      const node = this._heap[nodeIdx];
-      
-      if (this._compare(node, parent) < 0) {
-        // node is smaller than parent, swap
-        this._heap[parentIdx] = node;
+
+      if (this._comparator(node, parent) < 0) {
         this._heap[nodeIdx] = parent;
         nodeIdx = parentIdx;
       } else {
         break;
       }
     }
+    this._heap[nodeIdx] = node;
   }
 
   _siftDown() {
     let nodeIdx = 0;
     const length = this.size();
-    const node = this._heap[0]; // root
+    const node = this._heap[0]; // The root being pushed down
 
-    while (true) {
+    const halfLength = length >>> 1; // Optimization: only need to check nodes with children
+
+    while (nodeIdx < halfLength) {
       const leftChildIdx = (nodeIdx << 1) + 1;
       const rightChildIdx = leftChildIdx + 1;
-      let swapIdx = null;
-
-      if (leftChildIdx < length) {
-        const leftChild = this._heap[leftChildIdx];
-        if (this._compare(leftChild, node) < 0) {
-          swapIdx = leftChildIdx;
-        }
-      }
+      let smallerChildIdx = leftChildIdx;
+      let smallerChild = this._heap[leftChildIdx];
 
       if (rightChildIdx < length) {
         const rightChild = this._heap[rightChildIdx];
-        const currentBest = swapIdx === null ? node : this._heap[swapIdx];
-        
-        if (this._compare(rightChild, currentBest) < 0) {
-          swapIdx = rightChildIdx;
+        if (this._comparator(rightChild, smallerChild) < 0) {
+          smallerChildIdx = rightChildIdx;
+          smallerChild = rightChild;
         }
       }
 
-      if (swapIdx === null) break;
+      // If the node is already smaller than the smallest child, we are done
+      if (this._comparator(node, smallerChild) <= 0) {
+        break;
+      }
 
-      this._heap[nodeIdx] = this._heap[swapIdx];
-      this._heap[swapIdx] = node;
-      nodeIdx = swapIdx;
+      this._heap[nodeIdx] = smallerChild;
+      nodeIdx = smallerChildIdx;
     }
+
+    this._heap[nodeIdx] = node;
   }
-  
+
   _compare(a, b) {
     return this._comparator(a, b);
   }
