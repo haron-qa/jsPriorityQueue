@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
+    "coverage": "vitest run --coverage",
     "bench": "node benchmarks/perf.js"
   },
   "keywords": [
@@ -18,6 +19,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vitest": "^1.0.0"
+    "@vitest/coverage-v8": "^4.0.16",
+    "fastpriorityqueue": "^0.7.5",
+    "tinyqueue": "^3.0.0",
+    "vitest": "^4.0.16"
   }
 }
