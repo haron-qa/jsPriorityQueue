@@ -36,9 +36,9 @@ const results = {
 console.log('Warming up...');
 for (let i = 0; i < 5; i++) {
     const input = Array.from({ length: 10000 }, () => Math.random());
-    const pq = new PriorityQueue((a, b) => a - b);
-    const fpq = new FastPriorityQueue((a, b) => a - b);
-    const tq = new TinyQueue(undefined, (a, b) => a - b);
+    const pq = new PriorityQueue((a, b) => a < b);
+    const fpq = new FastPriorityQueue((a, b) => a < b);
+    const tq = new TinyQueue(undefined, (a, b) => a < b);
     for (let n of input) pq.push(n);
     while (!pq.isEmpty()) pq.pop();
     for (let n of input) fpq.add(n);
@@ -62,7 +62,7 @@ for (let r = 1; r <= ROUNDS; r++) {
     // But let's try to be fair on comparator overhead.
     // We'll use the constructor that matches the logic.
     {
-        const fpq = new FastPriorityQueue((a, b) => a - b);
+        const fpq = new FastPriorityQueue((a, b) => a < b);
         const t = timeIt(() => {
             for (let num of input) fpq.add(num);
             while (!fpq.isEmpty()) fpq.poll();
@@ -72,7 +72,7 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- TinyQueue ---
     {
-        const tq = new TinyQueue(undefined, (a, b) => a - b);
+        const tq = new TinyQueue(undefined, (a, b) => a < b);
         const t = timeIt(() => {
             for (let num of input) tq.push(num);
             while (tq.length > 0) tq.pop();
@@ -82,7 +82,7 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- My PQ ---
     {
-        const pq = new PriorityQueue((a, b) => a - b);
+        const pq = new PriorityQueue((a, b) => a < b);
         const t = timeIt(() => {
             for (let num of input) pq.push(num);
             while (!pq.isEmpty()) pq.pop();
@@ -95,7 +95,7 @@ for (let r = 1; r <= ROUNDS; r++) {
     {
         const arr = [...input];
         const t = timeIt(() => {
-            arr.sort((a, b) => a - b);
+            arr.sort((a, b) => a < b);
         });
         results.arr.push(t);
     }

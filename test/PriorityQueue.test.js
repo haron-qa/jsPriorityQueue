@@ -9,7 +9,7 @@ describe('PriorityQueue', () => {
         });
 
         it('starts empty', () => {
-            expect(pq.size()).toBe(0);
+            expect(pq.size).toBe(0);
             expect(pq.isEmpty()).toBe(true);
             expect(pq.peek()).toBeUndefined();
             expect(pq.pop()).toBeUndefined();
@@ -21,7 +21,7 @@ describe('PriorityQueue', () => {
             pq.push(20);
             pq.push(1);
 
-            expect(pq.size()).toBe(4);
+            expect(pq.size).toBe(4);
             expect(pq.peek()).toBe(1); // Smallest
 
             expect(pq.pop()).toBe(1);
@@ -45,7 +45,7 @@ describe('PriorityQueue', () => {
 
     describe('MaxHeap Behavior (Custom Comparator)', () => {
         it('orders numbers correctly (MaxHeap)', () => {
-            const maxPQ = new PriorityQueue((a, b) => b - a);
+            const maxPQ = new PriorityQueue((a, b) => a > b);
             maxPQ.push(10);
             maxPQ.push(5);
             maxPQ.push(20);
@@ -62,7 +62,7 @@ describe('PriorityQueue', () => {
 
     describe('Complex Objects', () => {
         it('works with objects and custom comparator', () => {
-            const tasks = new PriorityQueue((a, b) => a.priority - b.priority);
+            const tasks = new PriorityQueue((a, b) => a.priority < b.priority);
 
             tasks.push({ id: 'low', priority: 10 });
             tasks.push({ id: 'high', priority: 1 });
