@@ -122,11 +122,4 @@ export default class PriorityQueue {
     }
     this._heap[idx] = currentItem;
   }
-
-  /**
-   * Recover unused memory (for long-running priority queues).
-   */
-  _trim() {
-    this._heap = this._heap.slice(0, this._size);
-  }
 }
