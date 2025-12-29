@@ -4,15 +4,15 @@
  */
 export default class PriorityQueue {
   /**
-   * @param {function(any, any): number} [comparator] - Function that defines the sort order.
-   * Returns a straight value:
-   *  - negative if a < b (a comes first)
-   *  - positive if a > b (b comes first)
-   *  - 0 if equal
-   * Default is a MinHeap for numbers ((a, b) => a - b).
+   * @param {function(any, any): boolean} [comparator] - Function that defines the sort order.
+   * Returns a boolean:
+   *  - true if a should come before b (a has higher priority)
+   *  - false otherwise
+   * Default is a MinHeap for numbers ((a, b) => a < b).
    */
-  constructor(comparator = (a, b) => a - b) {
+  constructor(comparator = (a, b) => a < b) {
     this._heap = [];
+    this._size = 0;
     this._comparator = comparator;
   }
 
@@ -22,7 +22,7 @@ export default class PriorityQueue {
    * @returns {number}
    */
   size() {
-    return this._heap.length;
+    return this._size;
   }
 
   /**
@@ -31,7 +31,7 @@ export default class PriorityQueue {
    * @returns {boolean}
    */
   isEmpty() {
-    return this.size() === 0;
+    return this._size === 0;
   }
 
   /**
@@ -40,7 +40,7 @@ export default class PriorityQueue {
    * @returns {any}
    */
   peek() {
-    return this._heap.length === 0 ? undefined : this._heap[0];
+    return this._size === 0 ? undefined : this._heap[0];
   }
 
   /**
@@ -50,9 +50,25 @@ export default class PriorityQueue {
    * @returns {number} new size of the queue
    */
   push(item) {
-    this._heap.push(item);
-    this._siftUp();
-    return this.size();
+    let currentIdx = this._size;
+    this._heap[this._size] = item;
+    this._size += 1;
+
+    // Sift up inline for performance
+    let parentIdx;
+    let parent;
+    while (currentIdx > 0) {
+      parentIdx = (currentIdx - 1) >>> 1;
+      parent = this._heap[parentIdx];
+      if (!this._comparator(item, parent)) {
+        break;
+      }
+      this._heap[currentIdx] = parent;
+      currentIdx = parentIdx;
+    }
+    this._heap[currentIdx] = item;
+
+    return this._size;
   }
 
   /**
@@ -61,73 +77,56 @@ export default class PriorityQueue {
    * @returns {any}
    */
   pop() {
-    const size = this.size();
-    if (size === 0) return undefined;
+    if (this._size === 0) return undefined;
 
-    // Swap root with last element
-    const root = this._heap[0];
-    const tail = this._heap.pop();
-
-    if (this.size() > 0) {
-      this._heap[0] = tail;
-      this._siftDown();
+    const top = this._heap[0];
+    if (this._size > 1) {
+      this._heap[0] = this._heap[--this._size];
+      this._siftDown(0);
+    } else {
+      this._size -= 1;
     }
-
-    return root;
+    return top;
   }
 
-  _siftUp() {
-    let nodeIdx = this.size() - 1;
-    const node = this._heap[nodeIdx];
+  /**
+   * Internal method to restore heap property downward.
+   * @param {number} idx - Starting index
+   */
+  _siftDown(idx) {
+    const size = this._size;
+    const halfLength = this._size >>> 1;
+    const currentItem = this._heap[idx];
+    let bestChildIdx;
+    let rightChildIdx;
+    let bestChild;
 
-    while (nodeIdx > 0) {
-      const parentIdx = (nodeIdx - 1) >>> 1;
-      const parent = this._heap[parentIdx];
+    while (idx < halfLength) {
+      bestChildIdx = (idx << 1) + 1;
+      rightChildIdx = bestChildIdx + 1;
+      bestChild = this._heap[bestChildIdx];
 
-      if (this._comparator(node, parent) < 0) {
-        this._heap[nodeIdx] = parent;
-        nodeIdx = parentIdx;
-      } else {
-        break;
-      }
-    }
-    this._heap[nodeIdx] = node;
-  }
-
-  _siftDown() {
-    let nodeIdx = 0;
-    const length = this.size();
-    const node = this._heap[0]; // The root being pushed down
-
-    const halfLength = length >>> 1; // Optimization: only need to check nodes with children
-
-    while (nodeIdx < halfLength) {
-      const leftChildIdx = (nodeIdx << 1) + 1;
-      const rightChildIdx = leftChildIdx + 1;
-      let smallerChildIdx = leftChildIdx;
-      let smallerChild = this._heap[leftChildIdx];
-
-      if (rightChildIdx < length) {
-        const rightChild = this._heap[rightChildIdx];
-        if (this._comparator(rightChild, smallerChild) < 0) {
-          smallerChildIdx = rightChildIdx;
-          smallerChild = rightChild;
+      if (rightChildIdx < size) {
+        if (this._comparator(this._heap[rightChildIdx], bestChild)) {
+          bestChildIdx = rightChildIdx;
+          bestChild = this._heap[rightChildIdx];
         }
       }
 
-      // If the node is already smaller than the smallest child, we are done
-      if (this._comparator(node, smallerChild) <= 0) {
+      if (!this._comparator(bestChild, currentItem)) {
         break;
       }
 
-      this._heap[nodeIdx] = smallerChild;
-      nodeIdx = smallerChildIdx;
+      this._heap[idx] = bestChild;
+      idx = bestChildIdx;
     }
-
-    this._heap[nodeIdx] = node;
+    this._heap[idx] = currentItem;
   }
 
-  _compare(a, b) {
-    return this._comparator(a, b);
+  /**
+   * Recover unused memory (for long-running priority queues).
+   */
+  _trim() {
+    this._heap = this._heap.slice(0, this._size);
   }
 }
