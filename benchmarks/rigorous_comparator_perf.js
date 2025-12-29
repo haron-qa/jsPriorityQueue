@@ -36,9 +36,9 @@ const results = {
 console.log('Warming up...');
 for (let i = 0; i < 5; i++) {
     const input = Array.from({ length: 10000 }, () => Math.random());
-    const pq = new PriorityQueue();
-    const fpq = new FastPriorityQueue();
-    const tq = new TinyQueue();
+    const pq = new PriorityQueue((a, b) => a - b);
+    const fpq = new FastPriorityQueue((a, b) => a - b);
+    const tq = new TinyQueue(undefined, (a, b) => a - b);
     for (let n of input) pq.push(n);
     while (!pq.isEmpty()) pq.pop();
     for (let n of input) fpq.add(n);
@@ -62,7 +62,7 @@ for (let r = 1; r <= ROUNDS; r++) {
     // But let's try to be fair on comparator overhead.
     // We'll use the constructor that matches the logic.
     {
-        const fpq = new FastPriorityQueue();
+        const fpq = new FastPriorityQueue((a, b) => a - b);
         const t = timeIt(() => {
             for (let num of input) fpq.add(num);
             while (!fpq.isEmpty()) fpq.poll();
@@ -72,7 +72,7 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- TinyQueue ---
     {
-        const tq = new TinyQueue();
+        const tq = new TinyQueue(undefined, (a, b) => a - b);
         const t = timeIt(() => {
             for (let num of input) tq.push(num);
             while (tq.length > 0) tq.pop();
@@ -82,13 +82,14 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- My PQ ---
     {
-        const pq = new PriorityQueue();
+        const pq = new PriorityQueue((a, b) => a - b);
         const t = timeIt(() => {
             for (let num of input) pq.push(num);
             while (!pq.isEmpty()) pq.pop();
         });
         results.myPQ.push(t);
     }
+
 
     // --- Array.sort ---
     {
@@ -123,5 +124,5 @@ const output = `# Rigorous Performance Report
 *Generated on ${new Date().toISOString()}*
 `;
 
-fs.writeFileSync(path.join(process.cwd(), 'benchmarks/PERFORMANCE_SUMMARY.md'), output);
-console.log('Report saved to benchmarks/PERFORMANCE_SUMMARY.md');
+fs.writeFileSync(path.join(process.cwd(), 'benchmarks/PERFORMANCE_COMP_SUMMARY.md'), output);
+console.log('Report saved to benchmarks/PERFORMANCE_COMP_SUMMARY.md');
