@@ -91,6 +91,22 @@ export default class PriorityQueue {
   }
 
   /**
+   * Replace the heap content with provided array and heapify it.
+   * More efficient than pushing items one by one.
+   * Time Complexity: O(n)
+   * @param {Array} arr - Array of items to heapify
+   */
+  heapify(arr) {
+    this._heap = arr;
+    this._size = arr.length;
+
+    // Build heap from bottom up - start from last parent node
+    for (let i = (this._size >>> 1) - 1; i >= 0; i--) {
+      this._siftDown(i);
+    }
+  }
+
+  /**
    * Internal method to restore heap property downward.
    * @param {number} idx - Starting index
    */

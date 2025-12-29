@@ -107,4 +107,143 @@ describe('PriorityQueue', () => {
             }
         });
     });
-});
+
+    describe('heapify()', () => {
+        it('builds heap from unsorted array', () => {
+            const pq = new PriorityQueue();
+            pq.heapify([5, 3, 8, 1, 9, 2]);
+
+            expect(pq.size()).toBe(6);
+            expect(pq.pop()).toBe(1);
+            expect(pq.pop()).toBe(2);
+            expect(pq.pop()).toBe(3);
+            expect(pq.pop()).toBe(5);
+            expect(pq.pop()).toBe(8);
+            expect(pq.pop()).toBe(9);
+        });
+
+        it('handles empty array', () => {
+            const pq = new PriorityQueue();
+            pq.heapify([]);
+
+            expect(pq.size()).toBe(0);
+            expect(pq.isEmpty()).toBe(true);
+            expect(pq.peek()).toBeUndefined();
+            expect(pq.pop()).toBeUndefined();
+        });
+
+        it('handles single element', () => {
+            const pq = new PriorityQueue();
+            pq.heapify([42]);
+
+            expect(pq.size()).toBe(1);
+            expect(pq.peek()).toBe(42);
+            expect(pq.pop()).toBe(42);
+            expect(pq.isEmpty()).toBe(true);
+        });
+
+        it('works with MaxHeap comparator', () => {
+            const pq = new PriorityQueue((a, b) => a > b);
+            pq.heapify([5, 3, 8, 1, 9, 2]);
+
+            expect(pq.pop()).toBe(9);
+            expect(pq.pop()).toBe(8);
+            expect(pq.pop()).toBe(5);
+        });
+
+        it('replaces existing heap content', () => {
+            const pq = new PriorityQueue();
+            pq.push(100);
+            pq.push(200);
+
+            pq.heapify([1, 2, 3]);
+
+            expect(pq.size()).toBe(3);
+            expect(pq.pop()).toBe(1);
+        });
+    });
+
+    describe('Edge Cases', () => {
+        it('handles single element push/pop', () => {
+            const pq = new PriorityQueue();
+            pq.push(42);
+
+            expect(pq.size()).toBe(1);
+            expect(pq.peek()).toBe(42);
+            expect(pq.pop()).toBe(42);
+            expect(pq.isEmpty()).toBe(true);
+            expect(pq.pop()).toBeUndefined();
+        });
+
+        it('handles negative numbers', () => {
+            const pq = new PriorityQueue();
+            pq.push(-5);
+            pq.push(0);
+            pq.push(-10);
+            pq.push(5);
+
+            expect(pq.pop()).toBe(-10);
+            expect(pq.pop()).toBe(-5);
+            expect(pq.pop()).toBe(0);
+            expect(pq.pop()).toBe(5);
+        });
+
+        it('push returns new size', () => {
+            const pq = new PriorityQueue();
+            expect(pq.push(1)).toBe(1);
+            expect(pq.push(2)).toBe(2);
+            expect(pq.push(3)).toBe(3);
+        });
+
+        it('peek does not modify queue', () => {
+            const pq = new PriorityQueue();
+            pq.push(5);
+            pq.push(3);
+
+            expect(pq.peek()).toBe(3);
+            expect(pq.peek()).toBe(3);
+            expect(pq.size()).toBe(2);
+        });
+
+        it('handles strings with custom comparator', () => {
+            const pq = new PriorityQueue((a, b) => a.length < b.length);
+            pq.push('aaa');
+            pq.push('a');
+            pq.push('aa');
+
+            expect(pq.pop()).toBe('a');
+            expect(pq.pop()).toBe('aa');
+            expect(pq.pop()).toBe('aaa');
+        });
+
+        it('handles all equal elements', () => {
+            const pq = new PriorityQueue();
+            pq.push(5);
+            pq.push(5);
+            pq.push(5);
+
+            expect(pq.pop()).toBe(5);
+            expect(pq.pop()).toBe(5);
+            expect(pq.pop()).toBe(5);
+            expect(pq.isEmpty()).toBe(true);
+        });
+
+        it('handles already sorted array in heapify', () => {
+            const pq = new PriorityQueue();
+            pq.heapify([1, 2, 3, 4, 5]);
+
+            expect(pq.pop()).toBe(1);
+            expect(pq.pop()).toBe(2);
+            expect(pq.pop()).toBe(3);
+        });
+
+        it('handles reverse sorted array in heapify', () => {
+            const pq = new PriorityQueue();
+            pq.heapify([5, 4, 3, 2, 1]);
+
+            expect(pq.pop()).toBe(1);
+            expect(pq.pop()).toBe(2);
+            expect(pq.pop()).toBe(3);
+        });
+    });
+})
