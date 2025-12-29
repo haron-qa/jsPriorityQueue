@@ -4,13 +4,14 @@
  */
 export default class PriorityQueue {
   /**
-   * @param {function(any, any): boolean} [comparator] - Function that defines the sort order.
-   * Returns a boolean:
-   *  - true if a should come before b (a has higher priority)
-   *  - false otherwise
-   * Default is a MinHeap for numbers ((a, b) => a < b).
+   * @param {function(any, any): number} [comparator] - Function that defines the sort order.
+   * Returns a number:
+   *  - negative if a < b (a comes first)
+   *  - positive if a > b (b comes first)
+   *  - 0 if equal
+   * Default is a MinHeap for numbers ((a, b) => a - b).
    */
-  constructor(comparator = (a, b) => a < b) {
+  constructor(comparator = (a, b) => a - b) {
     this._heap = [];
     this._size = 0;
     this._comparator = comparator;
@@ -61,7 +62,7 @@ export default class PriorityQueue {
     while (currentIdx > 0) {
       parentIdx = (currentIdx - 1) >>> 1;
       parent = _heap[parentIdx];
-      if (!_comparator(item, parent)) {
+      if (_comparator(item, parent) >= 0) {
         break;
       }
       _heap[currentIdx] = parent;
@@ -124,13 +125,13 @@ export default class PriorityQueue {
       bestChild = _heap[bestChildIdx];
 
       if (rightChildIdx < _size) {
-        if (_comparator(_heap[rightChildIdx], bestChild)) {
+        if (_comparator(_heap[rightChildIdx], bestChild) < 0) {
           bestChildIdx = rightChildIdx;
           bestChild = _heap[rightChildIdx];
         }
       }
 
-      if (!_comparator(bestChild, currentItem)) {
+      if (_comparator(bestChild, currentItem) >= 0) {
         break;
       }
 

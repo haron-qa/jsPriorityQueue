@@ -45,7 +45,7 @@ describe('PriorityQueue', () => {
 
     describe('MaxHeap Behavior (Custom Comparator)', () => {
         it('orders numbers correctly (MaxHeap)', () => {
-            const maxPQ = new PriorityQueue((a, b) => a > b);
+            const maxPQ = new PriorityQueue((a, b) => b - a);
             maxPQ.push(10);
             maxPQ.push(5);
             maxPQ.push(20);
@@ -62,7 +62,7 @@ describe('PriorityQueue', () => {
 
     describe('Complex Objects', () => {
         it('works with objects and custom comparator', () => {
-            const tasks = new PriorityQueue((a, b) => a.priority < b.priority);
+            const tasks = new PriorityQueue((a, b) => a.priority - b.priority);
 
             tasks.push({ id: 'low', priority: 10 });
             tasks.push({ id: 'high', priority: 1 });
@@ -143,7 +143,7 @@ describe('PriorityQueue', () => {
         });
 
         it('works with MaxHeap comparator', () => {
-            const pq = new PriorityQueue((a, b) => a > b);
+            const pq = new PriorityQueue((a, b) => b - a);
             pq.heapify([5, 3, 8, 1, 9, 2]);
 
             expect(pq.pop()).toBe(9);
@@ -206,7 +206,7 @@ describe('PriorityQueue', () => {
         });
 
         it('handles strings with custom comparator', () => {
-            const pq = new PriorityQueue((a, b) => a.length < b.length);
+            const pq = new PriorityQueue((a, b) => a.length - b.length);
             pq.push('aaa');
             pq.push('a');
             pq.push('aa');

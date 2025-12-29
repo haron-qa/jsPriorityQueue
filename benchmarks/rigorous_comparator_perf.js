@@ -82,7 +82,7 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- My PQ ---
     {
-        const pq = new PriorityQueue((a, b) => (a - b) > 0);
+        const pq = new PriorityQueue((a, b) => a - b);
         const t = timeIt(() => {
             for (let num of input) pq.push(num);
             while (!pq.isEmpty()) pq.pop();
