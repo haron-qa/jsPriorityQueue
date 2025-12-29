@@ -62,7 +62,7 @@ for (let r = 1; r <= ROUNDS; r++) {
     // But let's try to be fair on comparator overhead.
     // We'll use the constructor that matches the logic.
     {
-        const fpq = new FastPriorityQueue((a, b) => a - b);
+        const fpq = new FastPriorityQueue((a, b) => (a - b) > 0);
         const t = timeIt(() => {
             for (let num of input) fpq.add(num);
             while (!fpq.isEmpty()) fpq.poll();
@@ -82,7 +82,7 @@ for (let r = 1; r <= ROUNDS; r++) {
 
     // --- My PQ ---
     {
-        const pq = new PriorityQueue((a, b) => a - b);
+        const pq = new PriorityQueue((a, b) => (a - b) > 0);
         const t = timeIt(() => {
             for (let num of input) pq.push(num);
             while (!pq.isEmpty()) pq.pop();
