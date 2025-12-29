@@ -94,7 +94,7 @@ for (let r = 1; r <= ROUNDS; r++) {
     {
         const arr = [...input];
         const t = timeIt(() => {
-            arr.sort((a, b) => a < b);
+            arr.sort((a, b) => a - b);
         });
         results.arr.push(t);
     }

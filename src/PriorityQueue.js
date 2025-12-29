@@ -50,8 +50,9 @@ export default class PriorityQueue {
    * @returns {number} new size of the queue
    */
   push(item) {
+    const { _heap, _comparator } = this;
     let currentIdx = this._size;
-    this._heap[this._size] = item;
+    _heap[this._size] = item;
     this._size += 1;
 
     // Sift up inline for performance
@@ -59,14 +60,14 @@ export default class PriorityQueue {
     let parent;
     while (currentIdx > 0) {
       parentIdx = (currentIdx - 1) >>> 1;
-      parent = this._heap[parentIdx];
-      if (!this._comparator(item, parent)) {
+      parent = _heap[parentIdx];
+      if (!_comparator(item, parent)) {
         break;
       }
-      this._heap[currentIdx] = parent;
+      _heap[currentIdx] = parent;
       currentIdx = parentIdx;
     }
-    this._heap[currentIdx] = item;
+    _heap[currentIdx] = item;
 
     return this._size;
   }
@@ -94,9 +95,9 @@ export default class PriorityQueue {
    * @param {number} idx - Starting index
    */
   _siftDown(idx) {
-    const size = this._size;
-    const halfLength = this._size >>> 1;
-    const currentItem = this._heap[idx];
+    const { _heap, _comparator, _size } = this;
+    const halfLength = _size >>> 1;
+    const currentItem = _heap[idx];
     let bestChildIdx;
     let rightChildIdx;
     let bestChild;
@@ -104,22 +105,22 @@ export default class PriorityQueue {
     while (idx < halfLength) {
       bestChildIdx = (idx << 1) + 1;
       rightChildIdx = bestChildIdx + 1;
-      bestChild = this._heap[bestChildIdx];
+      bestChild = _heap[bestChildIdx];
 
-      if (rightChildIdx < size) {
-        if (this._comparator(this._heap[rightChildIdx], bestChild)) {
+      if (rightChildIdx < _size) {
+        if (_comparator(_heap[rightChildIdx], bestChild)) {
           bestChildIdx = rightChildIdx;
-          bestChild = this._heap[rightChildIdx];
+          bestChild = _heap[rightChildIdx];
         }
       }
 
-      if (!this._comparator(bestChild, currentItem)) {
+      if (!_comparator(bestChild, currentItem)) {
         break;
       }
 
-      this._heap[idx] = bestChild;
+      _heap[idx] = bestChild;
       idx = bestChildIdx;
     }
-    this._heap[idx] = currentItem;
+    _heap[idx] = currentItem;
   }
 }

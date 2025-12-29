@@ -9,7 +9,7 @@ describe('PriorityQueue', () => {
         });
 
         it('starts empty', () => {
-            expect(pq.size).toBe(0);
+            expect(pq.size()).toBe(0);
             expect(pq.isEmpty()).toBe(true);
             expect(pq.peek()).toBeUndefined();
             expect(pq.pop()).toBeUndefined();
@@ -21,7 +21,7 @@ describe('PriorityQueue', () => {
             pq.push(20);
             pq.push(1);
 
-            expect(pq.size).toBe(4);
+            expect(pq.size()).toBe(4);
             expect(pq.peek()).toBe(1); // Smallest
 
             expect(pq.pop()).toBe(1);
