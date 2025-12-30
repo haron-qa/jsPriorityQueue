@@ -24,6 +24,9 @@
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.16",
     "fastpriorityqueue": "^0.7.5",
+    "flatqueue": "^3.0.0",
+    "heap-js": "^2.7.1",
+    "heapify": "^0.6.0",
     "tinyqueue": "^3.0.0",
     "vitest": "^4.0.16"
   }
