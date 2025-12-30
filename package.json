@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A performant generic Priority Queue implementation using Binary Heap",
   "main": "src/PriorityQueue.js",
+  "types": "src/PriorityQueue.d.ts",
   "type": "module",
   "scripts": {
     "test": "vitest",
