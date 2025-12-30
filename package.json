@@ -10,7 +10,8 @@
     "coverage": "vitest run --coverage",
     "bench": "node benchmarks/perf.js",
     "r_bench": "node benchmarks/rigorous_perf.js",
-    "r_comp_bench": "node benchmarks/rigorous_comparator_perf.js"
+    "r_comp_bench": "node benchmarks/rigorous_comparator_perf.js",
+    "r_obj_bench": "node benchmarks/rigorous_perf_objects.js"
   },
   "keywords": [
     "priority-queue",
