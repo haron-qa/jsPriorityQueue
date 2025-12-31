@@ -1,5 +1,5 @@
 {
-  "name": "js-priority-queue-implementation",
+  "name": "js-priority-queue",
   "version": "1.0.0",
   "description": "A performant generic Priority Queue implementation using Binary Heap",
   "main": "src/PriorityQueue.js",
