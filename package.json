@@ -21,7 +21,7 @@
     "algorithm"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.16",
     "fastpriorityqueue": "^0.7.5",
