@@ -20,8 +20,22 @@
     "data-structure",
     "algorithm"
   ],
-  "author": "",
+  "author": "haron-qa",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haron-qa/jsPriorityQueue.git"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/PriorityQueue.d.ts",
+      "import": "./src/PriorityQueue.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
   "devDependencies": {
     "@vitest/coverage-v8": "^4.0.16",
     "fastpriorityqueue": "^0.7.5",
