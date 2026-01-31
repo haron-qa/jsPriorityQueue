@@ -1,4 +1,4 @@
-# jsPriorityQueue
+# js-pq
 
 A high-performance generic Priority Queue implementation for JavaScript and TypeScript using a Binary Heap.
 
@@ -11,7 +11,7 @@ This project was developed for educational purposes to analyze and understand th
 - **TinyQueue** offers a smaller codebase, which means smaller bundle size.
 - **heap-js** is more feature-rich for advanced heap manipulations.
 
-`jsPriorityQueue` is for general-purpose applications that need a balance of performance and the flexibility of custom comparators.
+`js-pq` is for general-purpose applications that need a balance of performance and the flexibility of custom comparators.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![NPM Version](https://img.shields.io/badge/npm-1.0.0-cb3837.svg)](package.json)
@@ -39,7 +39,7 @@ This project was developed for educational purposes to analyze and understand th
 ## Installation
 
 ```bash
-npm install js-priority-queue
+npm install js-pq
 ```
 
 ## Usage
@@ -49,7 +49,7 @@ npm install js-priority-queue
 By default, the queue acts as a Min-Heap for numbers.
 
 ```javascript
-import PriorityQueue from 'js-priority-queue';
+import PriorityQueue from 'js-pq';
 
 const pq = new PriorityQueue();
 pq.push(10);
@@ -123,7 +123,7 @@ Benchmarks performed on 1,000,000 random numbers (Total time for Push + Pop ops 
 
 | Library | Push + Pop (1M) | Type | Best For |
 |---|---|---|---|
-| **jsPriorityQueue** | **114.81ms** | Binary Heap | **General use, high performance** |
+| **js-pq** | **114.81ms** | Binary Heap | **General use, high performance** |
 | `FastPriorityQueue` | 112.08ms | Binary Heap | High performance, specific focus on numbers |
 | `TinyQueue` | 126.66ms | Binary Heap | Small code size, minimal API |
 | `heap-js` | 134.15ms | Binary Heap | Feature-rich API (extract, replace, etc.) |

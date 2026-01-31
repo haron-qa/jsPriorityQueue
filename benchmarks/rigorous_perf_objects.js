@@ -144,7 +144,7 @@ const output = `# Rigorous Performance Report (Object Comparisons)
 | Implementation | Average (ms) | Median (ms) | Min (ms) | Max (ms) |
 |---|---|---|---|---|
 | **FastPriorityQueue** | ${stats.fpq.avg.toFixed(2)} | ${stats.fpq.median.toFixed(2)} | ${stats.fpq.min.toFixed(2)} | ${stats.fpq.max.toFixed(2)} |
-| **jsPriorityQueue** | **${stats.myPQ.avg.toFixed(2)}** | **${stats.myPQ.median.toFixed(2)}** | **${stats.myPQ.min.toFixed(2)}** | **${stats.myPQ.max.toFixed(2)}** |
+| **js-pq** | **${stats.myPQ.avg.toFixed(2)}** | **${stats.myPQ.median.toFixed(2)}** | **${stats.myPQ.min.toFixed(2)}** | **${stats.myPQ.max.toFixed(2)}** |
 | **TinyQueue** | ${stats.tq.avg.toFixed(2)} | ${stats.tq.median.toFixed(2)} | ${stats.tq.min.toFixed(2)} | ${stats.tq.max.toFixed(2)} |
 | **heap-js** | ${stats.heapJs.avg.toFixed(2)} | ${stats.heapJs.median.toFixed(2)} | ${stats.heapJs.min.toFixed(2)} | ${stats.heapJs.max.toFixed(2)} |
 | **FlatQueue** | ${stats.flatQueue.avg.toFixed(2)} | ${stats.flatQueue.median.toFixed(2)} | ${stats.flatQueue.min.toFixed(2)} | ${stats.flatQueue.max.toFixed(2)} |
