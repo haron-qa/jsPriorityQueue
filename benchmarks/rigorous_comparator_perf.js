@@ -117,7 +117,7 @@ const output = `# Rigorous Performance Report
 | Implementation | Average (ms) | Median (ms) | Min (ms) | Max (ms) |
 |---|---|---|---|---|
 | **FastPriorityQueue** | ${stats.fpq.avg.toFixed(2)} | ${stats.fpq.median.toFixed(2)} | ${stats.fpq.min.toFixed(2)} | ${stats.fpq.max.toFixed(2)} |
-| **jsPriorityQueue** | **${stats.myPQ.avg.toFixed(2)}** | **${stats.myPQ.median.toFixed(2)}** | **${stats.myPQ.min.toFixed(2)}** | **${stats.myPQ.max.toFixed(2)}** |
+| **js-pq** | **${stats.myPQ.avg.toFixed(2)}** | **${stats.myPQ.median.toFixed(2)}** | **${stats.myPQ.min.toFixed(2)}** | **${stats.myPQ.max.toFixed(2)}** |
 | **TinyQueue** | ${stats.tq.avg.toFixed(2)} | ${stats.tq.median.toFixed(2)} | ${stats.tq.min.toFixed(2)} | ${stats.tq.max.toFixed(2)} |
 | **Array.sort** | ${stats.arr.avg.toFixed(2)} | ${stats.arr.median.toFixed(2)} | ${stats.arr.min.toFixed(2)} | ${stats.arr.max.toFixed(2)} |
 
